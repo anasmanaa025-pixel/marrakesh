@@ -1,0 +1,803 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>For My Love</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Georgia', 'Times New Roman', serif;
+            background: linear-gradient(135deg, #1a0d1a 0%, #2d1b2d 25%, #3d253d 50%, #2d1b2d 75%, #1a0d1a 100%);
+            background-size: 400% 400%;
+            animation: gradientShift 15s ease infinite;
+            min-height: 100vh;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        @keyframes gradientShift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        /* CSS Heart Shape */
+        .heart {
+            position: fixed;
+            width: 30px;
+            height: 30px;
+            animation: floatHeart 10s infinite ease-in-out;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .heart::before,
+        .heart::after {
+            content: '';
+            width: 15px;
+            height: 24px;
+            position: absolute;
+            left: 15px;
+            top: 0;
+            background: linear-gradient(135deg, #c2185b, #e91e63, #f06292);
+            border-radius: 15px 15px 0 0;
+            transform: rotate(-45deg);
+            transform-origin: 0 100%;
+            box-shadow: 0 0 10px rgba(225, 29, 99, 0.5);
+        }
+
+        .heart::after {
+            left: 0;
+            transform: rotate(45deg);
+            transform-origin: 100% 100%;
+        }
+
+        @keyframes floatHeart {
+            0% {
+                transform: translateY(100vh) translateX(0) rotate(0deg) scale(0.5);
+                opacity: 0;
+            }
+            10% {
+                opacity: 0.9;
+            }
+            50% {
+                transform: translateY(50vh) translateX(20px) rotate(180deg) scale(1);
+                opacity: 0.9;
+            }
+            90% {
+                opacity: 0.9;
+            }
+            100% {
+                transform: translateY(-100px) translateX(-20px) rotate(360deg) scale(0.5);
+                opacity: 0;
+            }
+        }
+
+        @keyframes floatHeartFromTouch {
+            0% {
+                transform: translateY(0) translateX(0) rotate(0deg) scale(0.5);
+                opacity: 0;
+            }
+            20% {
+                opacity: 1;
+                transform: translateY(-20px) translateX(10px) rotate(45deg) scale(1);
+            }
+            100% {
+                transform: translateY(-200px) translateX(30px) rotate(180deg) scale(0.3);
+                opacity: 0;
+            }
+        }
+
+        /* Wedding Ring CSS */
+        .ring {
+            position: fixed;
+            width: 35px;
+            height: 35px;
+            pointer-events: none;
+            z-index: 1;
+            animation: floatRing 12s infinite ease-in-out;
+        }
+
+        .ring::before {
+            content: '';
+            position: absolute;
+            width: 35px;
+            height: 35px;
+            border: 4px solid transparent;
+            border-top-color: #d4af37;
+            border-right-color: #f4e4bc;
+            border-bottom-color: #d4af37;
+            border-left-color: #f4e4bc;
+            border-radius: 50%;
+            box-shadow: 
+                0 0 15px rgba(212, 175, 55, 0.6),
+                inset 0 0 10px rgba(212, 175, 55, 0.3);
+            animation: ringRotate 3s linear infinite;
+        }
+
+        .ring::after {
+            content: '';
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            border: 2px solid rgba(212, 175, 55, 0.3);
+            border-radius: 50%;
+        }
+
+        @keyframes ringRotate {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        @keyframes floatRing {
+            0% {
+                transform: translateY(100vh) translateX(0) rotate(0deg) scale(0.3);
+                opacity: 0;
+            }
+            10% {
+                opacity: 0.8;
+            }
+            50% {
+                transform: translateY(50vh) translateX(-30px) rotate(180deg) scale(1);
+                opacity: 0.8;
+            }
+            90% {
+                opacity: 0.8;
+            }
+            100% {
+                transform: translateY(-100px) translateX(30px) rotate(360deg) scale(0.3);
+                opacity: 0;
+            }
+        }
+
+        /* CSS Flower */
+        .flower {
+            position: fixed;
+            width: 40px;
+            height: 40px;
+            pointer-events: none;
+            z-index: 1;
+            animation: floatFlower 14s infinite ease-in-out;
+        }
+
+        .flower-petal {
+            position: absolute;
+            width: 18px;
+            height: 18px;
+            background: linear-gradient(135deg, #8b1a3d, #c2185b, #e91e63);
+            border-radius: 50% 0 50% 50%;
+            transform-origin: center;
+            box-shadow: 0 0 8px rgba(225, 29, 99, 0.4);
+        }
+
+        .flower-petal:nth-child(1) {
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%) rotate(0deg);
+        }
+
+        .flower-petal:nth-child(2) {
+            right: 0;
+            top: 50%;
+            transform: translateY(-50%) rotate(90deg);
+        }
+
+        .flower-petal:nth-child(3) {
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%) rotate(180deg);
+        }
+
+        .flower-petal:nth-child(4) {
+            left: 0;
+            top: 50%;
+            transform: translateY(-50%) rotate(270deg);
+        }
+
+        .flower-center {
+            position: absolute;
+            width: 12px;
+            height: 12px;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: radial-gradient(circle, #ffc107, #ff9800);
+            border-radius: 50%;
+            box-shadow: 0 0 10px rgba(255, 193, 7, 0.6);
+        }
+
+        @keyframes floatFlower {
+            0% {
+                transform: translateY(100vh) translateX(0) rotate(0deg) scale(0.4);
+                opacity: 0;
+            }
+            10% {
+                opacity: 0.7;
+            }
+            50% {
+                transform: translateY(50vh) translateX(40px) rotate(180deg) scale(1);
+                opacity: 0.7;
+            }
+            90% {
+                opacity: 0.7;
+            }
+            100% {
+                transform: translateY(-100px) translateX(-40px) rotate(360deg) scale(0.4);
+                opacity: 0;
+            }
+        }
+
+        /* Container */
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            position: relative;
+            z-index: 10;
+        }
+
+        /* Header */
+        .header {
+            text-align: center;
+            padding: 50px 20px 40px;
+            animation: fadeInDown 1.2s ease-out;
+        }
+
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-40px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .header h1 {
+            font-size: 3rem;
+            background: linear-gradient(135deg, #e91e63, #f06292, #c2185b);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 15px;
+            text-shadow: 0 0 30px rgba(225, 29, 99, 0.5);
+            font-weight: bold;
+            letter-spacing: 2px;
+        }
+
+        .header .subtitle {
+            font-size: 1.3rem;
+            color: #d4a5c7;
+            font-style: italic;
+            text-shadow: 0 2px 10px rgba(212, 165, 199, 0.3);
+        }
+
+        .header .celebration {
+            font-size: 1.5rem;
+            background: linear-gradient(135deg, #d4af37, #f4e4bc, #d4af37);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 20px;
+            font-weight: 600;
+            letter-spacing: 1px;
+            animation: fadeInDown 1.4s ease-out;
+        }
+
+        .header-title-wrapper {
+            text-align: center;
+            margin: 30px 0 20px 0;
+            animation: fadeInDown 1.6s ease-out;
+        }
+
+        .header-title-wrapper h1 {
+            margin: 0;
+        }
+
+        /* Decorative Images - Randomly positioned */
+        .decorative-image {
+            position: fixed;
+            max-width: 180px;
+            max-height: 180px;
+            width: auto;
+            height: auto;
+            opacity: 0.6;
+            z-index: 2;
+            pointer-events: none;
+            filter: drop-shadow(0 5px 15px rgba(225, 29, 99, 0.4));
+            animation: floatImage 20s infinite ease-in-out;
+            mix-blend-mode: screen;
+        }
+
+        @keyframes floatImage {
+            0%, 100% {
+                transform: translate(0, 0) rotate(0deg);
+            }
+            25% {
+                transform: translate(30px, -30px) rotate(5deg);
+            }
+            50% {
+                transform: translate(-20px, -50px) rotate(-5deg);
+            }
+            75% {
+                transform: translate(-30px, 20px) rotate(3deg);
+            }
+        }
+
+        /* Letter Container */
+        .letter-container {
+            background: rgba(30, 20, 35, 0.85);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(225, 29, 99, 0.2);
+            border-radius: 25px;
+            padding: 50px 40px;
+            margin: 30px 0;
+            box-shadow: 
+                0 20px 60px rgba(0, 0, 0, 0.5),
+                0 0 40px rgba(225, 29, 99, 0.1),
+                inset 0 0 50px rgba(225, 29, 99, 0.05);
+            animation: fadeIn 1.8s ease-out;
+            line-height: 1.9;
+            position: relative;
+            overflow: hidden;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: scale(0.95);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        .letter-container::before {
+            content: '';
+            position: absolute;
+            top: 30px;
+            left: 30px;
+            width: 60px;
+            height: 60px;
+            border: 2px solid rgba(225, 29, 99, 0.2);
+            border-radius: 50%;
+            box-shadow: 0 0 20px rgba(225, 29, 99, 0.2);
+        }
+
+        .letter-container::after {
+            content: '';
+            position: absolute;
+            bottom: 30px;
+            right: 30px;
+            width: 60px;
+            height: 60px;
+            border: 2px solid rgba(225, 29, 99, 0.2);
+            border-radius: 50%;
+            box-shadow: 0 0 20px rgba(225, 29, 99, 0.2);
+        }
+
+        .letter-content {
+            font-size: 1.15rem;
+            color: #e8d5e8;
+            text-align: justify;
+            position: relative;
+            z-index: 2;
+        }
+
+        .letter-content p {
+            margin-bottom: 25px;
+            animation: slideIn 1s ease-out;
+            animation-fill-mode: both;
+            text-shadow: 0 1px 3px rgba(0, 0, 0, 0.5);
+        }
+
+        .letter-content p:nth-child(1) { animation-delay: 0.3s; }
+        .letter-content p:nth-child(2) { animation-delay: 0.5s; }
+        .letter-content p:nth-child(3) { animation-delay: 0.7s; }
+        .letter-content p:nth-child(4) { animation-delay: 0.9s; }
+        .letter-content p:nth-child(5) { animation-delay: 1.1s; }
+        .letter-content p:nth-child(6) { animation-delay: 1.3s; }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateX(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        /* Signature */
+        .signature {
+            text-align: right;
+            margin-top: 40px;
+            font-style: italic;
+            background: linear-gradient(135deg, #e91e63, #f06292);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            font-size: 1.3rem;
+            font-weight: 600;
+            animation: fadeIn 2.5s ease-out;
+        }
+
+        /* Footer */
+        .footer {
+            text-align: center;
+            padding: 40px 20px;
+            font-size: 1.8rem;
+            animation: fadeIn 3s ease-out;
+        }
+
+        .footer-text {
+            background: linear-gradient(135deg, #d4af37, #f4e4bc, #d4af37);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-shadow: 0 0 30px rgba(212, 175, 55, 0.3);
+            font-weight: bold;
+            letter-spacing: 3px;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 2.2rem;
+            }
+
+            .header .subtitle {
+                font-size: 1.1rem;
+            }
+
+            .header .celebration {
+                font-size: 1.2rem;
+            }
+
+            .header-title-wrapper {
+                margin: 25px 0;
+            }
+
+            .decorative-image {
+                max-width: 120px;
+                max-height: 120px;
+            }
+
+            .letter-container {
+                padding: 35px 25px;
+                margin: 20px 0;
+            }
+
+            .letter-content {
+                font-size: 1.05rem;
+            }
+
+            .footer {
+                font-size: 1.5rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .header h1 {
+                font-size: 1.8rem;
+                letter-spacing: 1px;
+            }
+
+            .header .celebration {
+                font-size: 1rem;
+            }
+
+            .header-title-wrapper {
+                margin: 20px 0;
+            }
+
+            .decorative-image {
+                max-width: 100px;
+                max-height: 100px;
+            }
+
+            .letter-container {
+                padding: 30px 20px;
+                border-radius: 20px;
+            }
+
+            .letter-content {
+                font-size: 1rem;
+                line-height: 1.7;
+            }
+
+            .signature {
+                font-size: 1.1rem;
+            }
+
+            .footer {
+                font-size: 1.3rem;
+            }
+        }
+
+        /* Decorative corner elements */
+        .corner-deco {
+            position: fixed;
+            width: 80px;
+            height: 80px;
+            z-index: 0;
+            opacity: 0.15;
+            animation: pulse 4s infinite ease-in-out;
+        }
+
+        .corner-deco.top-left {
+            top: 20px;
+            left: 20px;
+        }
+
+        .corner-deco.top-right {
+            top: 20px;
+            right: 20px;
+        }
+
+        .corner-deco.bottom-left {
+            bottom: 20px;
+            left: 20px;
+        }
+
+        .corner-deco.bottom-right {
+            bottom: 20px;
+            right: 20px;
+        }
+
+        .corner-deco::before {
+            content: '';
+            position: absolute;
+            width: 40px;
+            height: 40px;
+            border: 3px solid #e91e63;
+            border-radius: 50%;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        .corner-deco::after {
+            content: '';
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            background: #e91e63;
+            border-radius: 50%;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        @keyframes pulse {
+            0%, 100% {
+                transform: scale(1);
+                opacity: 0.15;
+            }
+            50% {
+                transform: scale(1.1);
+                opacity: 0.25;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Decorative Corner Elements -->
+    <div class="corner-deco top-left"></div>
+    <div class="corner-deco top-right"></div>
+    <div class="corner-deco bottom-left"></div>
+    <div class="corner-deco bottom-right"></div>
+
+    <!-- Decorative Images - Randomly positioned -->
+    <img src="96edc1fac1f6641cf2d76b67c2f1fd4b-removebg-preview.png" alt="Love" class="decorative-image" id="deco-img-1">
+    <img src="eb97c8599cb23bf3c6eba9f92d809e12-removebg-preview.png" alt="Love" class="decorative-image" id="deco-img-2">
+    <img src="8011fe0d3f3d3eb81a8347b745b4f31d-removebg-preview.png" alt="Love" class="decorative-image" id="deco-img-3">
+    <img src="a86db4d7ffca2bd5b16a1acc0ba27194-removebg-preview.png" alt="Love" class="decorative-image" id="deco-img-4">
+
+    <div class="container">
+        <div class="header">
+            <div class="celebration">Celebrating our 29/12</div>
+            <div class="header-title-wrapper">
+                <h1>For My Marrakesh</h1>
+            </div>
+            <div class="subtitle">A Letter from the Heart</div>
+        </div>
+
+        <div class="letter-container">
+            <div class="letter-content">
+                <p>Marrakesh, I don't even know where to start, because loving you feels bigger than words. I just know that my heart always finds its way back to you. I love you in a way that feels calm and wild at the same time. Loving you feels natural, like breathing, like something my soul already knew how to do before I even understood it. You're not just someone I love, you're someone my heart chose without asking for reasons.</p>
+
+                <p>You are so beautiful, and I don't mean that in a simple way. Your beauty isn't only in how you look, it's in how you exist. It's in your smile, in the way you talk, in the way you feel things deeply. Sometimes I look at you and I genuinely think you don't even realize how beautiful you are, and that makes you even more beautiful. You shine without trying, and that's rare.</p>
+
+                <p>Your soul is something special, something soft and pure, like an angel placed gently into this world. There's kindness in you that feels real, not forced. There's warmth in your heart that makes people feel safe. The way you feel, the way you care, the way you love — it's all so honest. Being loved by you feels like being protected, like being understood without having to explain everything.</p>
+
+                <p>Your love supports me more than you know. When I'm tired, when I'm lost, when I feel weak, your feelings lift me up. Even when we're not together physically, your presence stays with me. You give me strength just by being you. Your love makes me believe in myself more, and that's something I'll always be grateful for.</p>
+
+                <p>I hate the distance between us. I hate everything that keeps us apart, every reason, every circumstance, every moment that says "not now." The distance hurts, and sometimes it feels unfair. But even with that pain, my love for you doesn't change. If loving you means suffering sometimes, I'll accept it. I'll try my entire life to be with you, because you're worth every struggle, every wait, every hard moment.</p>
+
+                <p>I'm so happy and proud that we've completed a year together. A whole year of love, memories, laughs, tears, understanding, misunderstandings, problems, and growth. We didn't only share good times, we shared real times. We passed troubles together, and that means more to me than perfection ever could. What we have is real, and that's why I believe we'll pass the big problem we're facing now too — together, just like we always have.</p>
+            </div>
+
+            <div class="signature">
+                Your Nono always will love you ya Marrakesh
+            </div>
+        </div>
+
+        <div class="footer">
+            <div class="footer-text">Forever Yours</div>
+        </div>
+    </div>
+
+    <script>
+        // Position decorative images randomly on page load
+        function positionDecorativeImages() {
+            const images = document.querySelectorAll('.decorative-image');
+            const positions = [
+                { top: '8%', left: '3%', animationDelay: '0s', transform: 'rotate(-15deg)' },
+                { top: '12%', right: '4%', left: 'auto', animationDelay: '3s', transform: 'rotate(20deg)' },
+                { bottom: '25%', left: '8%', top: 'auto', animationDelay: '6s', transform: 'rotate(-10deg)' },
+                { bottom: '18%', right: '3%', top: 'auto', animationDelay: '9s', transform: 'rotate(15deg)' }
+            ];
+
+            images.forEach((img, index) => {
+                if (positions[index]) {
+                    const pos = positions[index];
+                    img.style.top = pos.top || 'auto';
+                    img.style.bottom = pos.bottom || 'auto';
+                    img.style.left = pos.left || 'auto';
+                    img.style.right = pos.right || 'auto';
+                    img.style.animationDelay = pos.animationDelay;
+                    if (pos.transform) {
+                        img.style.transform = pos.transform;
+                    }
+                }
+            });
+        }
+
+        // Create CSS Hearts at specific position or random
+        function createHeart(x = null, y = null) {
+            const heart = document.createElement('div');
+            heart.className = 'heart';
+            
+            if (x !== null && y !== null) {
+                // Position at touch/click location - hearts float up from touch point
+                heart.style.left = x + 'px';
+                heart.style.top = y + 'px';
+                heart.style.position = 'fixed';
+                heart.style.animation = 'floatHeartFromTouch 2s ease-out forwards';
+            } else {
+                // Random position for automatic hearts
+                heart.style.left = Math.random() * 100 + '%';
+                heart.style.animationDuration = (Math.random() * 4 + 8) + 's';
+            }
+            
+            const size = Math.random() * 15 + 25;
+            heart.style.width = size + 'px';
+            heart.style.height = size + 'px';
+            document.body.appendChild(heart);
+
+            // Different timeout for touch hearts vs automatic hearts
+            const timeout = (x !== null && y !== null) ? 2500 : 12000;
+            setTimeout(() => {
+                if (heart.parentNode) {
+                    heart.remove();
+                }
+            }, timeout);
+        }
+
+        // Create CSS Flowers
+        function createFlower() {
+            const flower = document.createElement('div');
+            flower.className = 'flower';
+            flower.style.left = Math.random() * 100 + '%';
+            flower.style.animationDuration = (Math.random() * 5 + 10) + 's';
+            
+            // Create petals
+            for (let i = 0; i < 4; i++) {
+                const petal = document.createElement('div');
+                petal.className = 'flower-petal';
+                flower.appendChild(petal);
+            }
+            
+            // Create center
+            const center = document.createElement('div');
+            center.className = 'flower-center';
+            flower.appendChild(center);
+            
+            document.body.appendChild(flower);
+
+            setTimeout(() => {
+                flower.remove();
+            }, 15000);
+        }
+
+        // Create CSS Wedding Rings
+        function createRing() {
+            const ring = document.createElement('div');
+            ring.className = 'ring';
+            ring.style.left = Math.random() * 100 + '%';
+            ring.style.animationDuration = (Math.random() * 4 + 10) + 's';
+            const size = Math.random() * 10 + 30;
+            ring.style.width = size + 'px';
+            ring.style.height = size + 'px';
+            document.body.appendChild(ring);
+
+            setTimeout(() => {
+                ring.remove();
+            }, 14000);
+        }
+
+        // Create animations periodically
+        setInterval(createHeart, 1000);
+        setInterval(createFlower, 1500);
+        setInterval(createRing, 1800);
+
+        // Initial burst of animations
+        for (let i = 0; i < 8; i++) {
+            setTimeout(() => createHeart(), i * 300);
+            setTimeout(() => createFlower(), i * 400);
+            setTimeout(() => createRing(), i * 500);
+        }
+
+        // Position decorative images on load
+        positionDecorativeImages();
+
+        // Touch/Mouse event handlers for creating hearts
+        let lastTouchTime = 0;
+        const touchDelay = 200; // Minimum time between heart creations (ms)
+
+        function handleTouchStart(e) {
+            const currentTime = Date.now();
+            if (currentTime - lastTouchTime < touchDelay) {
+                return; // Throttle touches
+            }
+            lastTouchTime = currentTime;
+
+            if (e.touches && e.touches.length > 0) {
+                const touch = e.touches[0];
+                const x = touch.clientX;
+                const y = touch.clientY;
+                
+                // Create multiple hearts at the touch point
+                for (let i = 0; i < 3; i++) {
+                    setTimeout(() => {
+                        const offsetX = (Math.random() - 0.5) * 80;
+                        const offsetY = (Math.random() - 0.5) * 80;
+                        createHeart(x + offsetX, y + offsetY);
+                    }, i * 50);
+                }
+            }
+        }
+
+        function handleClick(e) {
+            const x = e.clientX;
+            const y = e.clientY;
+            
+            // Create multiple hearts at the click point
+            for (let i = 0; i < 3; i++) {
+                setTimeout(() => {
+                    const offsetX = (Math.random() - 0.5) * 80;
+                    const offsetY = (Math.random() - 0.5) * 80;
+                    createHeart(x + offsetX, y + offsetY);
+                }, i * 50);
+            }
+        }
+
+        // Add event listeners for touch and click
+        document.addEventListener('touchstart', handleTouchStart, { passive: true });
+        document.addEventListener('click', handleClick);
+    </script>
+</body>
+</html>
